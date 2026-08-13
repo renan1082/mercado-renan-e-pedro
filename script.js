@@ -1,16 +1,12 @@
-// =====================================
 // CLIENTE
-// =====================================
 
 let nomeCliente = prompt("Digite o nome do cliente:");
 
-if (nomeCliente === null || nomeCliente.trim() === "") {
+if (nomeCliente == null || nomeCliente.trim() == "") {
   nomeCliente = "Cliente";
 }
 
-// =====================================
 // VARIÁVEIS
-// =====================================
 
 let total = 0;
 
@@ -20,14 +16,12 @@ let produtos = [];
 
 let continuar = "SIM";
 
-// =====================================
 // PRODUTOS
-// =====================================
 
-while (continuar === "SIM") {
+while (continuar == "SIM") {
   let produto = Number(
     prompt(
-      "=== CAIXA DE MERCADO ===\n\n" +
+      "== CAIXA DE MERCADO ==\n\n" +
         "1 - Arroz (R$ 25,90)\n" +
         "2 - Feijão (R$ 9,50)\n" +
         "3 - Leite (R$ 5,80)\n" +
@@ -41,23 +35,23 @@ while (continuar === "SIM") {
 
   let preco = 0;
 
-  if (produto === 1) {
+  if (produto == 1) {
     nomeProduto = "Arroz";
 
     preco = 25.9;
-  } else if (produto === 2) {
+  } else if (produto == 2) {
     nomeProduto = "Feijão";
 
     preco = 9.5;
-  } else if (produto === 3) {
+  } else if (produto == 3) {
     nomeProduto = "Leite";
 
     preco = 5.8;
-  } else if (produto === 4) {
+  } else if (produto == 4) {
     nomeProduto = "Café";
 
     preco = 18.9;
-  } else if (produto === 5) {
+  } else if (produto == 5) {
     nomeProduto = "Açúcar";
 
     preco = 4.75;
@@ -67,13 +61,40 @@ while (continuar === "SIM") {
     continue;
   }
 
-  // =====================================
-  // QUANTIDADE
-  // =====================================
-
-  let quantidade = Number(
-    prompt("Digite a quantidade de " + nomeProduto + ":"),
+    // QUANTIDADE
+    let quantidadeDigitada = prompt(
+    "Digite a quantidade de " +
+      nomeProduto +
+      ":\n\n" +
+      "Digite CANCELAR para cancelar a operação.",
   );
+
+  if (
+    quantidadeDigitada == null ||
+    quantidadeDigitada.toUpperCase() == "CANCELAR"
+  ) {
+    alert("Operação cancelada!");
+
+    document.getElementById("app").innerHTML = `
+    <div class="container mt-5">
+      <div class="alert alert-danger text-center">
+        <h3>Operação cancelada</h3>
+        <p>A compra não foi finalizada.</p>
+
+        <button
+          class="btn btn-primary"
+          onclick="location.reload()"
+        >
+          Nova operação
+        </button>
+      </div>
+    </div>
+  `;
+
+    throw new Error("Operação cancelada");
+  }
+
+  let quantidade = Number(quantidadeDigitada);
 
   if (isNaN(quantidade) || quantidade <= 0) {
     alert("Quantidade inválida!");
@@ -81,10 +102,8 @@ while (continuar === "SIM") {
     continue;
   }
 
-  // =====================================
-  // SUBTOTAL
-  // =====================================
-
+    // SUBTOTAL
+  
   let subtotal = preco * quantidade;
 
   total = total + subtotal;
@@ -103,15 +122,13 @@ while (continuar === "SIM") {
     subtotal: subtotal,
   });
 
-  // =====================================
-  // CONTINUAR
-  // =====================================
-
+    // CONTINUAR
+  
   continuar = prompt(
     "Deseja adicionar outro produto?\n\n" + "Digite SIM ou NÃO",
   );
 
-  if (continuar === null) {
+  if (continuar == null) {
     continuar = "NÃO";
   } else {
     continuar = continuar.toUpperCase();
@@ -124,7 +141,7 @@ while (continuar === "SIM") {
       "Deseja adicionar outro produto?\n\n" + "Digite SIM ou NÃO",
     );
 
-    if (continuar === null) {
+    if (continuar == null) {
       continuar = "NÃO";
     } else {
       continuar = continuar.toUpperCase();
@@ -132,17 +149,23 @@ while (continuar === "SIM") {
   }
 }
 
-// =====================================
 // DESCONTO
-// =====================================
 
-let desconto = total * 0.1;
+let percentualDesconto = 0;
+
+if (total < 100) {
+  percentualDesconto = 0;
+} else if (total < 200) {
+  percentualDesconto = 0.05;
+} else {
+  percentualDesconto = 0.1;
+}
+
+let desconto = total * percentualDesconto;
 
 let totalFinal = total - desconto;
 
-// =====================================
 // PAGAMENTO
-// =====================================
 
 let pagamento = 0;
 
@@ -155,7 +178,7 @@ let troco = 0;
 while (pagamento !== 1 && pagamento !== 2 && pagamento !== 3) {
   pagamento = Number(
     prompt(
-      "=== FORMA DE PAGAMENTO ===\n\n" +
+      "== FORMA DE PAGAMENTO ==\n\n" +
         "1 - Dinheiro\n" +
         "2 - Cartão\n" +
         "3 - Pix\n\n" +
@@ -163,7 +186,7 @@ while (pagamento !== 1 && pagamento !== 2 && pagamento !== 3) {
     ),
   );
 
-  if (pagamento === 1) {
+  if (pagamento == 1) {
     formaPagamento = "Dinheiro";
 
     valorPago = Number(
@@ -181,13 +204,13 @@ while (pagamento !== 1 && pagamento !== 2 && pagamento !== 3) {
     }
 
     troco = valorPago - totalFinal;
-  } else if (pagamento === 2) {
+  } else if (pagamento == 2) {
     formaPagamento = "Cartão de Crédito";
 
     valorPago = totalFinal;
 
     troco = 0;
-  } else if (pagamento === 3) {
+  } else if (pagamento == 3) {
     formaPagamento = "Pix";
 
     valorPago = totalFinal;
@@ -198,9 +221,7 @@ while (pagamento !== 1 && pagamento !== 2 && pagamento !== 3) {
   }
 }
 
-// =====================================
 // MONTAR TABELA
-// =====================================
 
 let tabela = "";
 
@@ -234,9 +255,7 @@ for (let i = 0; i < produtos.length; i++) {
     `;
 }
 
-// =====================================
 // MOSTRAR NA PÁGINA
-// =====================================
 
 document.getElementById("app").innerHTML = `
  
@@ -402,28 +421,26 @@ document.getElementById("app").innerHTML = `
  
  
                 <div class="col-md-4">
- 
-                    <div class="valor">
- 
-                        <small>
-                            Desconto
-                        </small>
- 
-                        <h5>
-                            10%
-                        </h5>
- 
-                        <small>
- 
-                            R$
-                            ${desconto.toFixed(2)}
- 
-                        </small>
- 
-                    </div>
- 
+
+                <div class="valor">
+
+                    <small>
+                        Desconto
+                    </small>
+
+                    <h5>
+                        ${(percentualDesconto * 100).toFixed(0)}%
+                    </h5>
+
+                    <small>
+
+                        R$
+                        ${desconto.toFixed(2)}
+
+                    </small>
+
                 </div>
- 
+
  
                 <div class="col-md-4">
  
